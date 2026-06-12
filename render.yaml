@@ -1,0 +1,26 @@
+services:
+  # Express Backend Web Service
+  - type: web
+    name: smart-expense-tracker-backend
+    env: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 5001
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+
+  # React Frontend Static Site
+  - type: web
+    name: smart-expense-tracker-frontend
+    runtime: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
