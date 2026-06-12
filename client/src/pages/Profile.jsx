@@ -250,7 +250,7 @@ export default function Profile() {
           </div>
 
           {/* Main profile layout content */}
-          <main className="space-y-6">
+          <main className="space-y-6 min-w-0 w-full">
             
             {/* Header */}
             <header className="flex flex-col gap-4 rounded-[32px] border border-white/10 bg-[#09061d]/80 px-6 py-5 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">

@@ -370,7 +370,7 @@ export default function Analytics() {
           </div>
 
           {/* Main Analytics Content */}
-          <main className="space-y-6">
+          <main className="space-y-6 min-w-0 w-full">
             
             {/* Header */}
             <header className="flex flex-col gap-4 rounded-[32px] border border-white/10 bg-[#09061d]/80 px-6 py-5 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
@@ -522,7 +522,7 @@ export default function Analytics() {
                   <p className="text-xs uppercase tracking-[0.35em] text-purple-300/70">6-Month historical</p>
                   <h2 className="mt-2 text-xl font-semibold text-white">Monthly Expense Trend</h2>
                 </div>
-                <div className="h-72">
+                <div className="h-72 w-full min-w-0">
                   {loading ? (
                     <div className="flex items-end justify-between h-72 w-full animate-pulse px-6 py-4">
                       <div className="h-16 w-8 bg-slate-800/40 rounded-t-lg" />
@@ -533,7 +533,7 @@ export default function Analytics() {
                       <div className="h-32 w-8 bg-slate-800/40 rounded-t-lg" />
                     </div>
                   ) : (
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="99%" height="100%">
                       <BarChart data={monthlyTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                         <CartesianGrid stroke="rgba(148,163,184,0.06)" vertical={false} />
                         <XAxis dataKey="label" stroke="#94a3b8" tickLine={false} axisLine={false} style={{ fontSize: 12 }} />
@@ -567,7 +567,7 @@ export default function Analytics() {
                 </div>
               </div>
 
-              <div className="h-80">
+              <div className="h-80 w-full min-w-0">
                 {loading ? (
                   <div className="h-80 w-full animate-pulse flex flex-col justify-between py-6">
                     <div className="flex items-end justify-between h-64 border-b border-l border-slate-800/20 px-6">
@@ -584,7 +584,7 @@ export default function Analytics() {
                     </div>
                   </div>
                 ) : (
-                  <ResponsiveContainer width="100%" height="100%">
+                  <ResponsiveContainer width="99%" height="100%">
                     <AreaChart data={monthlyTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                       <defs>
                         <linearGradient id="incomeGrad" x1="0" y1="0" x2="0" y2="1">

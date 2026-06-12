@@ -343,7 +343,7 @@ export default function Dashboard() {
             </aside>
           </div>
 
-          <main className="space-y-6">
+          <main className="space-y-6 min-w-0 w-full">
             <header className="flex flex-col gap-4 rounded-[32px] border border-white/10 bg-[#09061d]/80 px-6 py-5 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-3">
                 {/* Mobile hamburger menu toggle */}
@@ -418,8 +418,8 @@ export default function Dashboard() {
                     <span className="inline-flex h-2.5 w-2.5 rounded-full bg-green-400" /> Growth
                   </div>
                 </div>
-                <div className="h-[320px]">
-                  <ResponsiveContainer width="100%" height="100%">
+                <div className="h-[320px] w-full min-w-0">
+                  <ResponsiveContainer width="99%" height="100%">
                     <AreaChart data={dynamicTrendData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                       <defs>
                         <linearGradient id="balanceGradient" x1="0" y1="0" x2="0" y2="1">
@@ -495,8 +495,8 @@ export default function Dashboard() {
                       <p className="text-sm uppercase tracking-[0.35em] text-purple-300/60">Trend</p>
                       <span className="rounded-3xl bg-cyan-500/10 px-3 py-1 text-xs uppercase tracking-[0.35em] text-cyan-200">Revenue</span>
                     </div>
-                    <div className="mt-5 h-40">
-                      <ResponsiveContainer width="100%" height="100%">
+                    <div className="mt-5 h-40 w-full min-w-0">
+                      <ResponsiveContainer width="99%" height="100%">
                         <BarChart data={dynamicTrendData}>
                           <CartesianGrid stroke="rgba(148,163,184,0.12)" vertical={false} />
                           <XAxis dataKey="month" stroke="#7c3aed" tickLine={false} axisLine={false} />
@@ -524,7 +524,7 @@ export default function Dashboard() {
                     View all
                   </button>
                 </div>
-                <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#08061a]">
+                <div className="overflow-x-auto rounded-[28px] border border-white/10 bg-[#08061a]">
                   <table className="min-w-full table-auto text-left">
                     <thead className="bg-[#0e0b2e]/80">
                       <tr>
