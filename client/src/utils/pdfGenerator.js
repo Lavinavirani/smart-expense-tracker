@@ -1,5 +1,5 @@
 import { jsPDF } from "jspdf";
-import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
 
 /**
  * Generates a premium PDF Monthly Expense Report for the user.
@@ -319,7 +319,7 @@ export const generateMonthlyExpenseReport = (user, month, year, transactions, bu
     ];
   });
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: currentY,
     head: budgetTableHeaders,
     body: budgetTableRows,
@@ -368,7 +368,7 @@ export const generateMonthlyExpenseReport = (user, month, year, transactions, bu
   });
 
   // --- 7. STRATEGIC SAVINGS INSIGHTS ---
-  currentY = doc.autoTableEndPosY() + 8;
+  currentY = doc.lastAutoTable.finalY + 8;
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
@@ -474,7 +474,7 @@ export const generateMonthlyExpenseReport = (user, month, year, transactions, bu
     ];
   });
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: p2Y,
     head: ledgerHeaders,
     body: ledgerRows,
