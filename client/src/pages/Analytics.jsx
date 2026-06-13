@@ -20,7 +20,6 @@ import {
   FiActivity,
   FiBarChart2,
   FiCreditCard,
-  FiDollarSign,
   FiLogOut,
   FiPieChart,
   FiTrendingUp,
@@ -32,6 +31,7 @@ import {
   FiMenu,
   FiUser,
 } from "react-icons/fi";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
 
@@ -48,9 +48,9 @@ const categoryColors = {
 
 const formatCurrency = (value) => {
   const number = Number(value) || 0;
-  return number.toLocaleString("en-US", {
+  return number.toLocaleString("en-IN", {
     style: "currency",
-    currency: "USD",
+    currency: "INR",
     maximumFractionDigits: 0,
   });
 };
@@ -274,7 +274,7 @@ export default function Analytics() {
       value: loading ? "..." : formatCurrency(largestPurchase),
       color: "from-orange-500 to-red-600",
       shadow: "shadow-orange-500/10",
-      icon: FiDollarSign,
+      icon: FaIndianRupeeSign,
     },
     {
       title: "Savings Rate",
@@ -290,7 +290,7 @@ export default function Analytics() {
     { label: "Overview", icon: FiBarChart2, path: "/dashboard" },
     { label: "Transactions", icon: FiCreditCard, path: "/transactions" },
     { label: "Analytics", icon: FiPieChart, active: true, path: "/analytics" },
-    { label: "Budget", icon: FiDollarSign, path: "/budget" },
+    { label: "Budget", icon: FaIndianRupeeSign, path: "/budget" },
     { label: "Profile", icon: FiUser, path: "/profile" },
   ];
 
@@ -335,8 +335,8 @@ export default function Analytics() {
   );
 
   return (
-    <div className="min-h-screen bg-[#050416] text-white">
-      <div className="mx-auto max-w-screen-2xl px-6 py-8 lg:px-10">
+    <div className="min-h-screen bg-[#050416] text-white w-full overflow-x-hidden">
+      <div className="mx-auto max-w-screen-2xl px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
         <div className="grid gap-6 xl:grid-cols-[280px_1fr]">
           
           {/* Desktop Sidebar */}
@@ -457,7 +457,7 @@ export default function Analytics() {
             <section className="grid gap-6 lg:grid-cols-2">
               
               {/* Pie Chart: Spending Breakdown */}
-              <div className="rounded-[32px] border border-white/10 bg-[#09061d]/80 p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl">
+              <div className="min-w-0 w-full overflow-hidden rounded-[32px] border border-white/10 bg-[#09061d]/80 p-4 sm:p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl">
                 <div className="mb-6">
                   <p className="text-xs uppercase tracking-[0.35em] text-purple-300/70">Category distribution</p>
                   <h2 className="mt-2 text-xl font-semibold text-white">Expense Breakdown</h2>
@@ -517,7 +517,7 @@ export default function Analytics() {
               </div>
 
               {/* Bar Chart: Monthly Expenses */}
-              <div className="rounded-[32px] border border-white/10 bg-[#09061d]/80 p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl">
+              <div className="min-w-0 w-full overflow-hidden rounded-[32px] border border-white/10 bg-[#09061d]/80 p-4 sm:p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl">
                 <div className="mb-6">
                   <p className="text-xs uppercase tracking-[0.35em] text-purple-300/70">6-Month historical</p>
                   <h2 className="mt-2 text-xl font-semibold text-white">Monthly Expense Trend</h2>
@@ -549,7 +549,7 @@ export default function Analytics() {
             </section>
 
             {/* Area Chart: Income vs Expense Comparison */}
-            <section className="rounded-[32px] border border-white/10 bg-[#09061d]/80 p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl">
+            <section className="min-w-0 w-full overflow-hidden rounded-[32px] border border-white/10 bg-[#09061d]/80 p-4 sm:p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl">
               <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                   <p className="text-xs uppercase tracking-[0.35em] text-purple-300/70">Budget performance</p>

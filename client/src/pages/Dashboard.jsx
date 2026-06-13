@@ -18,7 +18,6 @@ import {
   FiArrowUpRight,
   FiBarChart2,
   FiCreditCard,
-  FiDollarSign,
   FiLogOut,
   FiPieChart,
   FiPlusCircle,
@@ -30,14 +29,15 @@ import {
   FiFileText,
   FiTag,
 } from "react-icons/fi";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const categoryOptions = ["Food", "Transportation", "Utilities", "Shopping", "Salary", "Other"];
 
 const formatCurrency = (value) => {
   const number = Number(value) || 0;
-  return number.toLocaleString("en-US", {
+  return number.toLocaleString("en-IN", {
     style: "currency",
-    currency: "USD",
+    currency: "INR",
     maximumFractionDigits: 0,
   });
 };
@@ -134,7 +134,7 @@ export default function Dashboard() {
     const formatted = absNum >= 1000
       ? `${(absNum / 1000).toFixed(1).replace(/\.0$/, "")}k`
       : absNum.toString();
-    return isNegative ? `-$${formatted}` : `$${formatted}`;
+    return isNegative ? `-₹${formatted}` : `₹${formatted}`;
   };
 
   const getAuthHeaders = () => {
@@ -236,7 +236,7 @@ export default function Dashboard() {
     {
       title: "Total Balance",
       value: loading ? "Loading..." : formatCurrency(balance),
-      icon: FiDollarSign,
+      icon: FaIndianRupeeSign,
       accent: "from-purple-500 to-pink-500",
     },
     {
@@ -264,7 +264,7 @@ export default function Dashboard() {
     { label: "Overview", icon: FiBarChart2, active: true, path: "/dashboard" },
     { label: "Transactions", icon: FiCreditCard, path: "/transactions" },
     { label: "Analytics", icon: FiPieChart, path: "/analytics" },
-    { label: "Budget", icon: FiDollarSign, path: "/budget" },
+    { label: "Budget", icon: FaIndianRupeeSign, path: "/budget" },
     { label: "Profile", icon: FiUser, path: "/profile" },
   ];
 
@@ -309,8 +309,8 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="min-h-screen bg-[#050416] text-white">
-      <div className="mx-auto max-w-screen-2xl px-6 py-8 lg:px-10">
+    <div className="min-h-screen bg-[#050416] text-white w-full overflow-x-hidden">
+      <div className="mx-auto max-w-screen-2xl px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
         <div className="grid gap-6 xl:grid-cols-[280px_1fr]">
           
           {/* Desktop Sidebar */}
@@ -408,7 +408,7 @@ export default function Dashboard() {
                 )}
               </div>
 
-              <div className="rounded-[32px] border border-white/10 bg-[#09061d]/80 p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)]">
+              <div className="min-w-0 w-full overflow-hidden rounded-[32px] border border-white/10 bg-[#09061d]/80 p-4 sm:p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)]">
                 <div className="mb-6 flex items-center justify-between">
                   <div>
                     <p className="text-sm uppercase tracking-[0.35em] text-purple-300/70">Balance trend</p>
@@ -449,7 +449,7 @@ export default function Dashboard() {
             </section>
 
             <section className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-              <div className="rounded-[32px] border border-white/10 bg-[#09061d]/80 p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)]">
+              <div className="min-w-0 w-full overflow-hidden rounded-[32px] border border-white/10 bg-[#09061d]/80 p-4 sm:p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)]">
                 <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="text-sm uppercase tracking-[0.35em] text-purple-300/70">Quick actions</p>
@@ -475,7 +475,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <div className="rounded-[28px] bg-[#0b0921] p-5 shadow-[0_12px_30px_rgba(139,92,246,0.12)]">
+                  <div className="rounded-[28px] bg-[#0b0921] p-4 sm:p-5 shadow-[0_12px_30px_rgba(139,92,246,0.12)]">
                     <div className="flex items-center justify-between gap-4">
                       <p className="text-sm uppercase tracking-[0.35em] text-purple-300/60">This month</p>
                       <span className="rounded-3xl bg-purple-500/10 px-3 py-1 text-xs uppercase tracking-[0.35em] text-purple-200">On track</span>
@@ -490,7 +490,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   </div>
-                  <div className="rounded-[28px] bg-[#0b0921] p-5 shadow-[0_12px_30px_rgba(236,72,153,0.12)]">
+                  <div className="rounded-[28px] bg-[#0b0921] p-4 sm:p-5 shadow-[0_12px_30px_rgba(236,72,153,0.12)]">
                     <div className="flex items-center justify-between gap-4">
                       <p className="text-sm uppercase tracking-[0.35em] text-purple-300/60">Trend</p>
                       <span className="rounded-3xl bg-cyan-500/10 px-3 py-1 text-xs uppercase tracking-[0.35em] text-cyan-200">Revenue</span>
@@ -511,7 +511,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="rounded-[32px] border border-white/10 bg-[#09061d]/80 p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)]">
+              <div className="min-w-0 w-full overflow-hidden rounded-[32px] border border-white/10 bg-[#09061d]/80 p-4 sm:p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)]">
                 <div className="mb-6 flex items-center justify-between">
                   <div>
                     <p className="text-sm uppercase tracking-[0.35em] text-purple-300/70">Recent activity</p>
@@ -528,7 +528,7 @@ export default function Dashboard() {
                   <table className="min-w-full table-auto text-left">
                     <thead className="bg-[#0e0b2e]/80">
                       <tr>
-                        <th className="px-5 py-4 text-xs uppercase tracking-[0.35em] text-slate-400">ID</th>
+                        <th className="hidden sm:table-cell px-5 py-4 text-xs uppercase tracking-[0.35em] text-slate-400">ID</th>
                         <th className="px-5 py-4 text-xs uppercase tracking-[0.35em] text-slate-400">Description</th>
                         <th className="px-5 py-4 text-xs uppercase tracking-[0.35em] text-slate-400">Amount</th>
                         <th className="px-5 py-4 text-xs uppercase tracking-[0.35em] text-slate-400">Status</th>
@@ -538,7 +538,7 @@ export default function Dashboard() {
                       {loading ? (
                         Array.from({ length: 3 }).map((_, i) => (
                           <tr key={i} className="border-t border-slate-800/30 animate-pulse">
-                            <td className="px-5 py-6"><div className="h-4 w-12 bg-slate-800/60 rounded" /></td>
+                            <td className="hidden sm:table-cell px-5 py-6"><div className="h-4 w-12 bg-slate-800/60 rounded" /></td>
                             <td className="px-5 py-6"><div className="h-4 w-28 bg-slate-800/60 rounded" /></td>
                             <td className="px-5 py-6"><div className="h-4 w-16 bg-slate-800/60 rounded ml-auto" /></td>
                             <td className="px-5 py-6"><div className="h-6 w-16 bg-slate-800/60 rounded-full" /></td>
@@ -559,13 +559,13 @@ export default function Dashboard() {
                       ) : (
                         expenses.map((item) => {
                           const amount = Number(item.amount) || 0;
-                          const formattedAmount = `${item.type === "expense" ? "-" : "+"}${Math.abs(amount).toLocaleString("en-US", {
+                          const formattedAmount = `${item.type === "expense" ? "-" : "+"}${Math.abs(amount).toLocaleString("en-IN", {
                             style: "currency",
-                            currency: "USD",
+                            currency: "INR",
                           })}`;
                           return (
                             <tr key={item._id || item.id || `${item.title}-${item.amount}`} className="border-t border-slate-800/30 hover:bg-slate-800/20 transition">
-                              <td className="px-5 py-4 text-sm text-slate-300">{item._id?.slice(0, 8) || item.id || "—"}</td>
+                              <td className="hidden sm:table-cell px-5 py-4 text-sm text-slate-300">{item._id?.slice(0, 8) || item.id || "—"}</td>
                               <td className="px-5 py-4 text-sm text-white">{item.title || item.category || "Transaction"}</td>
                               <td className={`px-5 py-4 text-right text-sm font-semibold ${item.type === "income" ? "text-emerald-400" : "text-rose-400"}`}>
                                 {formattedAmount}
@@ -627,10 +627,10 @@ export default function Dashboard() {
 
               <div>
                 <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                  Amount (USD)
+                  Amount (INR)
                 </label>
                 <div className="relative">
-                  <FiDollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 h-5 w-5" />
+                  <FaIndianRupeeSign className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 h-5 w-5" />
                   <input
                     name="amount"
                     type="number"

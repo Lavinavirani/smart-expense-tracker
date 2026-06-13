@@ -7,7 +7,6 @@ import {
   FiArrowUpRight,
   FiBarChart2,
   FiCreditCard,
-  FiDollarSign,
   FiLogOut,
   FiPieChart,
   FiSearch,
@@ -20,14 +19,15 @@ import {
   FiMenu,
   FiUser,
 } from "react-icons/fi";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
 
 const formatCurrency = (value) => {
   const number = Number(value) || 0;
-  return number.toLocaleString("en-US", {
+  return number.toLocaleString("en-IN", {
     style: "currency",
-    currency: "USD",
+    currency: "INR",
     maximumFractionDigits: 2,
   });
 };
@@ -199,7 +199,7 @@ export default function Transactions() {
     { label: "Overview", icon: FiBarChart2, path: "/dashboard" },
     { label: "Transactions", icon: FiCreditCard, active: true, path: "/transactions" },
     { label: "Analytics", icon: FiPieChart, path: "/analytics" },
-    { label: "Budget", icon: FiDollarSign, path: "/budget" },
+    { label: "Budget", icon: FaIndianRupeeSign, path: "/budget" },
     { label: "Profile", icon: FiUser, path: "/profile" },
   ];
 
@@ -244,8 +244,8 @@ export default function Transactions() {
   );
 
   return (
-    <div className="min-h-screen bg-[#050416] text-white">
-      <div className="mx-auto max-w-screen-2xl px-6 py-8 lg:px-10">
+    <div className="min-h-screen bg-[#050416] text-white w-full overflow-x-hidden">
+      <div className="mx-auto max-w-screen-2xl px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
         <div className="grid gap-6 xl:grid-cols-[280px_1fr]">
           
           {/* Desktop Sidebar */}
@@ -327,7 +327,7 @@ export default function Transactions() {
             </section>
 
             {/* Filter and Search Section */}
-            <section className="rounded-[32px] border border-white/10 bg-[#09061d]/80 p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl">
+            <section className="min-w-0 w-full overflow-hidden rounded-[32px] border border-white/10 bg-[#09061d]/80 p-4 sm:p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 
                 {/* Search Field */}
@@ -401,8 +401,8 @@ export default function Transactions() {
                         <tr>
                           <th className="px-6 py-4 text-xs uppercase tracking-[0.35em] text-slate-400">Date</th>
                           <th className="px-6 py-4 text-xs uppercase tracking-[0.35em] text-slate-400">Title</th>
-                          <th className="px-6 py-4 text-xs uppercase tracking-[0.35em] text-slate-400">Category</th>
-                          <th className="px-6 py-4 text-xs uppercase tracking-[0.35em] text-slate-400">Type</th>
+                          <th className="hidden sm:table-cell px-6 py-4 text-xs uppercase tracking-[0.35em] text-slate-400">Category</th>
+                          <th className="hidden sm:table-cell px-6 py-4 text-xs uppercase tracking-[0.35em] text-slate-400">Type</th>
                           <th className="px-6 py-4 text-xs uppercase tracking-[0.35em] text-slate-400 text-right">Amount</th>
                           <th className="px-6 py-4 text-xs uppercase tracking-[0.35em] text-slate-400 text-center">Actions</th>
                         </tr>
@@ -413,8 +413,8 @@ export default function Transactions() {
                             <tr key={i} className="border-t border-slate-800/30 animate-pulse">
                               <td className="px-6 py-5"><div className="h-4 w-20 bg-slate-800/60 rounded" /></td>
                               <td className="px-6 py-5"><div className="h-4 w-36 bg-slate-800/60 rounded" /></td>
-                              <td className="px-6 py-5"><div className="h-6 w-20 bg-slate-800/60 rounded-full" /></td>
-                              <td className="px-6 py-5"><div className="h-6 w-16 bg-slate-800/60 rounded-full" /></td>
+                              <td className="hidden sm:table-cell px-6 py-5"><div className="h-6 w-20 bg-slate-800/60 rounded-full" /></td>
+                              <td className="hidden sm:table-cell px-6 py-5"><div className="h-6 w-16 bg-slate-800/60 rounded-full" /></td>
                               <td className="px-6 py-5"><div className="h-4 w-16 bg-slate-800/60 rounded ml-auto" /></td>
                               <td className="px-6 py-5 flex justify-center"><div className="h-9 w-9 bg-slate-800/60 rounded-xl" /></td>
                             </tr>
@@ -448,12 +448,12 @@ export default function Transactions() {
                                   {item.note && <p className="text-xs text-slate-500 mt-1">{item.note}</p>}
                                 </div>
                               </td>
-                              <td className="px-6 py-4 text-sm text-slate-300">
+                              <td className="hidden sm:table-cell px-6 py-4 text-sm text-slate-300">
                                 <span className="inline-flex rounded-2xl bg-white/5 border border-white/10 px-3 py-1 text-xs">
                                   {item.category || "Other"}
                                 </span>
                               </td>
-                              <td className="px-6 py-4 text-sm">
+                              <td className="hidden sm:table-cell px-6 py-4 text-sm">
                                 <span
                                   className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
                                     item.type === "income"
@@ -483,10 +483,10 @@ export default function Transactions() {
                           );
                         })
                       )}
-                    </tbody>
-                  </table>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
               )}
             </section>
           </main>

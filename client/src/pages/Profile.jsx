@@ -6,7 +6,6 @@ import {
   FiActivity,
   FiBarChart2,
   FiCreditCard,
-  FiDollarSign,
   FiLogOut,
   FiPieChart,
   FiUser,
@@ -18,6 +17,7 @@ import {
   FiMail,
   FiCalendar,
 } from "react-icons/fi";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
 
@@ -168,7 +168,7 @@ export default function Profile() {
     { label: "Overview", icon: FiBarChart2, path: "/dashboard" },
     { label: "Transactions", icon: FiCreditCard, path: "/transactions" },
     { label: "Analytics", icon: FiPieChart, path: "/analytics" },
-    { label: "Budget", icon: FiDollarSign, path: "/budget" },
+    { label: "Budget", icon: FaIndianRupeeSign, path: "/budget" },
     { label: "Profile", icon: FiUser, active: true, path: "/profile" },
   ];
 
@@ -215,7 +215,7 @@ export default function Profile() {
   );
 
   return (
-    <div className="min-h-screen bg-[#050416] text-white">
+    <div className="min-h-screen bg-[#050416] text-white w-full overflow-x-hidden">
       <div className="mx-auto max-w-screen-2xl px-6 py-8 lg:px-10">
         <div className="grid gap-6 xl:grid-cols-[280px_1fr]">
           

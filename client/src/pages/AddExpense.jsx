@@ -1,4 +1,5 @@
-import { FiArrowLeft, FiDollarSign, FiCalendar, FiFileText } from "react-icons/fi";
+import { FiArrowLeft, FiCalendar, FiFileText } from "react-icons/fi";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 import { useState } from "react";
 
 function AddExpense() {
@@ -67,7 +68,7 @@ function AddExpense() {
                 Expense Amount *
               </label>
               <div className="relative">
-                <FiDollarSign className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-violet-400" />
+                <FaIndianRupeeSign className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-violet-400" />
                 <input
                   type="number"
                   name="amount"
@@ -176,7 +177,7 @@ function AddExpense() {
                 <div>
                   <p className="text-sm text-slate-400 mb-1">Total Expense</p>
                   <p className="text-2xl font-bold text-violet-300">
-                    ${formData.amount || "0.00"}
+                    ₹{formData.amount || "0.00"}
                   </p>
                 </div>
                 <div className="text-right">

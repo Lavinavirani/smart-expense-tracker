@@ -6,7 +6,6 @@ import {
   FiActivity,
   FiBarChart2,
   FiCreditCard,
-  FiDollarSign,
   FiLogOut,
   FiPieChart,
   FiAlertTriangle,
@@ -19,6 +18,7 @@ import {
   FiMenu,
   FiUser,
 } from "react-icons/fi";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
 
@@ -46,9 +46,9 @@ const categoryColors = {
 
 const formatCurrency = (value) => {
   const number = Number(value) || 0;
-  return number.toLocaleString("en-US", {
+  return number.toLocaleString("en-IN", {
     style: "currency",
-    currency: "USD",
+    currency: "INR",
     maximumFractionDigits: 0,
   });
 };
@@ -240,7 +240,7 @@ export default function Budget() {
     {
       title: "Monthly Limit",
       value: loading ? "..." : formatCurrency(totalBudgetLimit),
-      icon: FiDollarSign,
+      icon: FaIndianRupeeSign,
       color: "from-purple-500 to-pink-500",
       shadow: "shadow-purple-500/10",
     },
@@ -272,7 +272,7 @@ export default function Budget() {
     { label: "Overview", icon: FiBarChart2, path: "/dashboard" },
     { label: "Transactions", icon: FiCreditCard, path: "/transactions" },
     { label: "Analytics", icon: FiPieChart, path: "/analytics" },
-    { label: "Budget", icon: FiDollarSign, active: true, path: "/budget" },
+    { label: "Budget", icon: FaIndianRupeeSign, active: true, path: "/budget" },
     { label: "Profile", icon: FiUser, path: "/profile" },
   ];
 
@@ -317,8 +317,8 @@ export default function Budget() {
   );
 
   return (
-    <div className="min-h-screen bg-[#050416] text-white">
-      <div className="mx-auto max-w-screen-2xl px-6 py-8 lg:px-10">
+    <div className="min-h-screen bg-[#050416] text-white w-full overflow-x-hidden">
+      <div className="mx-auto max-w-screen-2xl px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
         <div className="grid gap-6 xl:grid-cols-[280px_1fr]">
           
           {/* Desktop Sidebar */}
@@ -439,7 +439,7 @@ export default function Budget() {
             <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
               
               {/* Category Budget Cards */}
-              <section className="rounded-[32px] border border-white/10 bg-[#09061d]/80 p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl space-y-6">
+              <section className="min-w-0 w-full overflow-hidden rounded-[32px] border border-white/10 bg-[#09061d]/80 p-4 sm:p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] backdrop-blur-xl space-y-6">
                 <div>
                   <p className="text-xs uppercase tracking-[0.35em] text-purple-300/70">Category Limits</p>
                   <h2 className="mt-2 text-xl font-semibold text-white">Monthly Budgets</h2>
@@ -568,7 +568,7 @@ export default function Budget() {
               </section>
 
               {/* Category Budget Manager Form */}
-              <section className="rounded-[32px] border border-white/10 bg-[#09061d]/80 p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] h-fit">
+              <section className="min-w-0 w-full overflow-hidden rounded-[32px] border border-white/10 bg-[#09061d]/80 p-4 sm:p-6 shadow-[0_30px_70px_rgba(94,43,255,0.16)] h-fit">
                 <div>
                   <p className="text-xs uppercase tracking-[0.35em] text-purple-300/70">Limits Manager</p>
                   <h2 className="mt-2 text-xl font-semibold text-white">Set Budget Limit</h2>
@@ -596,7 +596,7 @@ export default function Budget() {
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                      Monthly Limit (USD)
+                      Monthly Limit (INR)
                     </label>
                     <input
                       type="number"
