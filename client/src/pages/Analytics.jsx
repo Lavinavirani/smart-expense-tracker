@@ -30,8 +30,10 @@ import {
   FiX,
   FiMenu,
   FiUser,
+  FiFileText,
 } from "react-icons/fi";
 import { FaIndianRupeeSign } from "react-icons/fa6";
+import { generateMonthlyExpenseReport } from "../utils/pdfGenerator";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
 
@@ -78,6 +80,10 @@ export default function Analytics() {
   const [error, setError] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+  const [reportLoading, setReportLoading] = useState(false);
+  const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [reportMonth, setReportMonth] = useState(new Date().getMonth() + 1);
+  const [reportYear, setReportYear] = useState(new Date().getFullYear());
 
   const showToast = (message, type = "success") => {
     setToast({ show: true, message, type });
@@ -115,6 +121,38 @@ export default function Analytics() {
       setError(message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDownloadReport = async (e) => {
+    e.preventDefault();
+    setReportLoading(true);
+    try {
+      const headers = getAuthHeaders();
+      if (!headers) {
+        showToast("Session expired. Please log in again.", "error");
+        navigate("/");
+        return;
+      }
+      // Fetch user details, budgets, and all expenses concurrently
+      const [userRes, budgetsRes, expensesRes] = await Promise.all([
+        axios.get(`${API_URL}/auth/me`, { headers }),
+        axios.get(`${API_URL}/budgets`, { headers }),
+        axios.get(`${API_URL}/expenses`, { headers })
+      ]);
+
+      const userObj = userRes.data;
+      const budgetsList = Array.isArray(budgetsRes.data) ? budgetsRes.data : [];
+      const expensesList = Array.isArray(expensesRes.data) ? expensesRes.data : (expensesRes.data.expenses || []);
+
+      generateMonthlyExpenseReport(userObj, Number(reportMonth), Number(reportYear), expensesList, budgetsList);
+      showToast("Monthly PDF report downloaded successfully! 📄", "success");
+      setReportModalOpen(false);
+    } catch (err) {
+      console.error(err);
+      showToast(err.response?.data?.message || "Failed to generate monthly report PDF.", "error");
+    } finally {
+      setReportLoading(false);
     }
   };
 
@@ -390,13 +428,21 @@ export default function Analytics() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <button
                   onClick={handleLogout}
                   className="inline-flex items-center gap-2 rounded-3xl bg-[#1f0b47] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#2f1a6f] hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <FiLogOut className="h-5 w-5" />
                   Logout
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setReportModalOpen(true)}
+                  className="inline-flex items-center gap-2 rounded-3xl bg-white/5 border border-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <FiFileText className="h-5 w-5 text-purple-400" />
+                  Download Report
                 </button>
               </div>
             </header>
@@ -656,6 +702,90 @@ export default function Analytics() {
     .animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
     .animate-slideInRight { animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
   `}</style>
+  {reportModalOpen && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 py-6 backdrop-blur-md animate-fadeIn">
+      <div className="w-full max-w-md rounded-[32px] border border-white/10 bg-[#09061d]/95 p-6 shadow-[0_40px_80px_rgba(0,0,0,0.55)] backdrop-blur-xl animate-scaleUp">
+        <div className="flex items-center justify-between gap-4 border-b border-slate-800/40 pb-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.35em] text-purple-300/70">Download PDF Report</p>
+            <h2 className="mt-2 text-xl font-semibold text-white">Monthly Report</h2>
+          </div>
+          <button
+            type="button"
+            onClick={() => setReportModalOpen(false)}
+            disabled={reportLoading}
+            className="rounded-full bg-white/5 p-2.5 text-slate-400 hover:text-white transition hover:bg-white/10 disabled:opacity-50"
+          >
+            <FiX className="h-5 w-5" />
+          </button>
+        </div>
+
+        <form className="mt-6 space-y-5" onSubmit={handleDownloadReport}>
+          <div>
+            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+              Select Month
+            </label>
+            <select
+              value={reportMonth}
+              onChange={(e) => setReportMonth(Number(e.target.value))}
+              disabled={reportLoading}
+              className="w-full bg-[#050416] border border-slate-800 rounded-2xl px-4 py-3 text-sm text-white outline-none focus:border-purple-500/70 focus:ring-2 focus:ring-purple-500/20 transition appearance-none"
+            >
+              {Array.from({ length: 12 }, (_, i) => (
+                <option key={i + 1} value={i + 1} className="bg-[#09061d]">
+                  {new Date(0, i).toLocaleString("default", { month: "long" })}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+              Select Year
+            </label>
+            <input
+              type="number"
+              value={reportYear}
+              onChange={(e) => setReportYear(Number(e.target.value))}
+              disabled={reportLoading}
+              min="2020"
+              max="2100"
+              className="w-full bg-[#050416] border border-slate-800 rounded-2xl px-4 py-3 text-sm text-white outline-none focus:border-purple-500/70 focus:ring-2 focus:ring-purple-500/20 transition"
+            />
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end pt-4 border-t border-slate-800/40">
+            <button
+              type="button"
+              onClick={() => setReportModalOpen(false)}
+              disabled={reportLoading}
+              className="w-full sm:w-auto inline-flex items-center justify-center rounded-3xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10 disabled:opacity-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={reportLoading}
+              className="w-full sm:w-auto inline-flex items-center justify-center rounded-3xl bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/20 transition hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed hover:scale-[1.02] active:scale-[0.98]"
+            >
+              {reportLoading ? (
+                <span className="flex items-center gap-2">
+                  <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Generating...
+                </span>
+              ) : (
+                "Download PDF"
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )}
+
   {toast.show && (
     <div className="fixed top-6 right-6 z-50 flex items-center gap-3 rounded-2xl border bg-[#09061d]/95 p-4 shadow-xl backdrop-blur-xl animate-slideInRight border-white/10">
       <div
